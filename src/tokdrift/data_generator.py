@@ -16,6 +16,7 @@ from .regex import RegexProcessor
 from .data_filter import TxtDataFilter
 from .config import Config
 from .immutable_identifiers_handler import ImmutableIdentifiersHandler
+from .swift_tokens import tokenize_swift, classify
 from . import tasks
 
 
@@ -65,6 +66,11 @@ class DataExtractor:
                     if token.type == Token.EOF:
                         continue
                     token.type = lexer.symbolicNames[token.type] if token.type < len(lexer.symbolicNames) else 'UNKNOWN'
+            elif self.config.lang == "swift":
+                # tree-sitter instead of ANTLR: see swift_ext/README for rationale
+                tokens, _has_error = tokenize_swift(context)
+                # TODO: real Swift immutable-identifier analysis
+                immutable_identifiers = set(initial_immutable_identifiers)
             else:
                 raise ValueError(f"Unsupported language: {self.config.lang}")
             
@@ -246,7 +252,15 @@ class DataExtractor:
                         'type': token.type,
                         'pos': f'({token.start}, {token.stop + 1})'
                     })
-
+                elif self.config.lang == "swift":
+                    is_identifier, is_operator, wire_type = classify(token, immutable_identifiers)
+                    tokenize_tokens.append({
+                        'token_name': token.text,
+                        'identifier': is_identifier,
+                        'operator': is_operator,
+                        'type': wire_type,
+                        'pos': f'({token.start}, {token.stop + 1})'
+                    })
             return tokenize_tokens
         except Exception as e:
             print(f"Tokenize parsing failed: {e}. Skipping this example")

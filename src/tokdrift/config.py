@@ -158,6 +158,13 @@ class Config:
                 [('OP', 'NAME')],
                 [('OP', 'ALL')],
             ]
+        elif self.lang == "swift":
+            self.all_target_combinations = [
+                [('(', ')')],              # lparentheses + rparentheses
+                [('(', 'NAME')],           # lparentheses + name
+                [(')', ')')],              # rparentheses + rparentheses
+                [('.', 'NAME')],           # period + name
+            ]
         else:
             raise ValueError(f"Invalid language: {self.lang}")
         
