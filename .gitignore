@@ -48,3 +48,5 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+# derived data: rebuild with swift_ext/corpus.py
+swift_ext/data/corpus.jsonl

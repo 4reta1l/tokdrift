@@ -1,0 +1,22 @@
+{
+  "('(', 'NAME')": "preserving",
+  "(']', ')')": "preserving",
+  "('[', '(')": "preserving",
+  "(')', ']')": "preserving",
+  "(']', ',')": "preserving",
+  "('[', 'NAME')": "preserving",
+  "('[', '1')": "preserving",
+  "('==', '(')": "preserving",
+  "('[', '\"')": "preserving",
+  "(')', ')')": "preserving",
+  "('[', ']')": "preserving",
+  "('[', '-')": "preserving",
+  "('.', 'NAME')": "ALWAYS BREAKS",
+  "('-', '1')": "ALWAYS BREAKS",
+  "('OP', 'NAME')": "ALWAYS BREAKS",
+  "('OP', 'ALL')": "ALWAYS BREAKS",
+  "('(', ')')": "never fires",
+  "(')', '.')": "never fires",
+  "(',', 'NAME')": "never fires",
+  "(')', ',')": "preserving"
+}

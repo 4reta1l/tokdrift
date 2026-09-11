@@ -112,6 +112,11 @@ class Config:
             '+': 'plus',
             '*': 'asterisk',
             '++': 'double_plus',
+            # added for Swift rules; without these, combination_name falls back
+            # to the raw symbol and '"' ends up inside an output directory path
+            ',': 'comma',
+            '==': 'double_equals',
+            '"': 'doublequote',
 
             # Special cases handled separately: 'operator' for any operator, 'name' for any name token
         }
@@ -159,12 +164,62 @@ class Config:
                 [('OP', 'ALL')],
             ]
         elif self.lang == "swift":
+            # Verified with `swiftc -parse` against MultiPL-E humaneval-swift
+            # (158 files, 158/158 parse clean at baseline).
+            # Raw verdicts: swift_ext/data/rule_verdicts.json
+            # Ordered by occurrence count over the full corpus, as in the paper.
             self.all_target_combinations = [
-                [('(', ')')],              # lparentheses + rparentheses
-                [('(', 'NAME')],           # lparentheses + name
-                [(')', ')')],              # rparentheses + rparentheses
-                [('.', 'NAME')],           # period + name
+                [('(', 'NAME')],           # lparen + name            3176 sites, 158 files
+                [(']', ')')],              # rsquarebracket + rparen   818 sites, 158 files
+                [('[', '(')],              # lsquarebracket + lparen   323 sites, 158 files
+                [(')', ']')],              # rparen + rsquarebracket   323 sites, 158 files
+                [(']', ',')],              # rsquarebracket + comma    318 sites, 158 files
+                [('[', 'NAME')],           # lsquarebracket + name     185 sites,  82 files
+                [('[', '1')],              # lsquarebracket + literal  174 sites,  43 files
+                [('==', '(')],             # double_equals + lparen    158 sites, 158 files
+                [('[', '\"')],             # lsquarebracket + string   121 sites,  19 files
+                [(')', ')')],              # rparen + rparen            90 sites,  10 files
             ]
+            # EXCLUDED -- verified NOT semantics-preserving in Swift.
+            # Two distinct mechanisms, neither of which exists in Java or Python:
+            #
+            #   ('.', 'NAME')   359 sites, breaks 158/158 files.
+            #       swiftc: "extraneous whitespace after '.' is not permitted".
+            #       Swift forbids whitespace between '.' and the member name.
+            #       This is S15 in the paper and is preserving in both Java and
+            #       Python, where it is one of the reported rules -- it is also
+            #       the rule in the paper's opening .factorial example.
+            #
+            #   ('-', '1')       61 sites, breaks every file it touches.
+            #       swiftc: "unary operator cannot be separated from its operand".
+            #       Swift classifies an operator as prefix, infix or postfix by
+            #       the whitespace around it. Inserting a space to the right of
+            #       a prefix '-' destroys the binding. Note the contrast with
+            #       ('[', '-') below, which IS preserving: whitespace on the
+            #       LEFT of '-' keeps it prefix.
+            #
+            #   ('OP', 'NAME')  S17 -- subsumes ('.', 'NAME') and inherits the break.
+            #   ('OP', 'ALL')   S18 -- same.
+            #
+            # VERIFIED PRESERVING but below the top-10 frequency cut:
+            #   ('[', ']')  70 sites / 40 files
+            #   ('[', '-')  48 sites / 16 files
+            #   (')', ',')  37 sites /  3 files
+            #       Note: a 60-file sample reported this one as "never fires".
+            #       It occurs in only 3 of 158 files. Rules this sparse are
+            #       invisible to subsets -- all verdicts here are full-corpus.
+            #
+            # NOT INCLUDED -- zero matches anywhere in the corpus:
+            #   ('(', ')'), (')', '.'), (',', 'NAME'), and every
+            #   (<operator>, 'NAME') pair tested: + - * / < > ! ? -> ..< =
+            #   MultiPL-E Swift is machine-formatted and never writes an
+            #   arithmetic operator adjacent to an identifier, so the
+            #   operator-plus-name case is unexercised by this benchmark.
+            #
+            # ORACLE NOTE: tree-sitter-swift reports NO structural change for
+            # ('.', 'NAME') in 158/158 breaking cases, but DOES detect
+            # ('-', '1') in 20/20. Parse-tree comparison is a partial oracle
+            # for Swift; only the compiler is sufficient.
         else:
             raise ValueError(f"Invalid language: {self.lang}")
         
