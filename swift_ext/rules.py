@@ -192,7 +192,11 @@ def cmd_verify(args):
             verdict = "ALWAYS BREAKS"
         else:
             verdict = f"BREAKS {broke}/{n_files}"
-        results[str(rule)] = verdict
+        results[str(rule)] = {
+            "verdict": verdict, "edits": edits, "files": n_files,
+            "shape_changed": shape_diff, "swiftc_rejected": broke,
+            "ts_blind": blind, "example": example,
+        }
         print(f"{str(rule):<18}{edits:>7}{n_files:>7}{shape_diff:>8}{broke:>9}{blind:>10}  {verdict}")
         if example:
             print(f"{'':18}└─ {example}")
@@ -201,6 +205,7 @@ def cmd_verify(args):
     out.write_text(json.dumps(results, indent=2))
     print(f"\nwrote {out}")
     print("ts-blind = swiftc rejected it but tree-sitter saw no change at all.")
+    print(f"corpus size: {len(usable)} files parsing clean at baseline")
 
 
 if __name__ == "__main__":

@@ -1,22 +1,182 @@
 {
-  "('(', 'NAME')": "preserving",
-  "(']', ')')": "preserving",
-  "('[', '(')": "preserving",
-  "(')', ']')": "preserving",
-  "(']', ',')": "preserving",
-  "('[', 'NAME')": "preserving",
-  "('[', '1')": "preserving",
-  "('==', '(')": "preserving",
-  "('[', '\"')": "preserving",
-  "(')', ')')": "preserving",
-  "('[', ']')": "preserving",
-  "('[', '-')": "preserving",
-  "('.', 'NAME')": "ALWAYS BREAKS",
-  "('-', '1')": "ALWAYS BREAKS",
-  "('OP', 'NAME')": "ALWAYS BREAKS",
-  "('OP', 'ALL')": "ALWAYS BREAKS",
-  "('(', ')')": "never fires",
-  "(')', '.')": "never fires",
-  "(',', 'NAME')": "never fires",
-  "(')', ',')": "preserving"
+  "('(', 'NAME')": {
+    "verdict": "preserving",
+    "edits": 3176,
+    "files": 158,
+    "shape_changed": 0,
+    "swiftc_rejected": 0,
+    "ts_blind": 0,
+    "example": ""
+  },
+  "(']', ')')": {
+    "verdict": "preserving",
+    "edits": 818,
+    "files": 158,
+    "shape_changed": 0,
+    "swiftc_rejected": 0,
+    "ts_blind": 0,
+    "example": ""
+  },
+  "('[', '(')": {
+    "verdict": "preserving",
+    "edits": 323,
+    "files": 158,
+    "shape_changed": 0,
+    "swiftc_rejected": 0,
+    "ts_blind": 0,
+    "example": ""
+  },
+  "(')', ']')": {
+    "verdict": "preserving",
+    "edits": 323,
+    "files": 158,
+    "shape_changed": 0,
+    "swiftc_rejected": 0,
+    "ts_blind": 0,
+    "example": ""
+  },
+  "(']', ',')": {
+    "verdict": "preserving",
+    "edits": 318,
+    "files": 158,
+    "shape_changed": 0,
+    "swiftc_rejected": 0,
+    "ts_blind": 0,
+    "example": ""
+  },
+  "('[', 'NAME')": {
+    "verdict": "preserving",
+    "edits": 185,
+    "files": 82,
+    "shape_changed": 0,
+    "swiftc_rejected": 0,
+    "ts_blind": 0,
+    "example": ""
+  },
+  "('[', '1')": {
+    "verdict": "preserving",
+    "edits": 174,
+    "files": 43,
+    "shape_changed": 0,
+    "swiftc_rejected": 0,
+    "ts_blind": 0,
+    "example": ""
+  },
+  "('==', '(')": {
+    "verdict": "preserving",
+    "edits": 158,
+    "files": 158,
+    "shape_changed": 0,
+    "swiftc_rejected": 0,
+    "ts_blind": 0,
+    "example": ""
+  },
+  "('[', '\"')": {
+    "verdict": "preserving",
+    "edits": 121,
+    "files": 19,
+    "shape_changed": 0,
+    "swiftc_rejected": 0,
+    "ts_blind": 0,
+    "example": ""
+  },
+  "(')', ')')": {
+    "verdict": "preserving",
+    "edits": 90,
+    "files": 10,
+    "shape_changed": 0,
+    "swiftc_rejected": 0,
+    "ts_blind": 0,
+    "example": ""
+  },
+  "('[', ']')": {
+    "verdict": "preserving",
+    "edits": 70,
+    "files": 40,
+    "shape_changed": 0,
+    "swiftc_rejected": 0,
+    "ts_blind": 0,
+    "example": ""
+  },
+  "('[', '-')": {
+    "verdict": "preserving",
+    "edits": 48,
+    "files": 16,
+    "shape_changed": 0,
+    "swiftc_rejected": 0,
+    "ts_blind": 0,
+    "example": ""
+  },
+  "('.', 'NAME')": {
+    "verdict": "ALWAYS BREAKS",
+    "edits": 359,
+    "files": 158,
+    "shape_changed": 0,
+    "swiftc_rejected": 158,
+    "ts_blind": 158,
+    "example": "HumanEval_0_has_close_elements: extraneous whitespace after '.' is not permitted"
+  },
+  "('-', '1')": {
+    "verdict": "ALWAYS BREAKS",
+    "edits": 61,
+    "files": 20,
+    "shape_changed": 20,
+    "swiftc_rejected": 20,
+    "ts_blind": 0,
+    "example": "HumanEval_3_below_zero: unary operator cannot be separated from its operand"
+  },
+  "('OP', 'NAME')": {
+    "verdict": "ALWAYS BREAKS",
+    "edits": 3721,
+    "files": 158,
+    "shape_changed": 0,
+    "swiftc_rejected": 158,
+    "ts_blind": 158,
+    "example": "HumanEval_0_has_close_elements: extraneous whitespace after '.' is not permitted"
+  },
+  "('OP', 'ALL')": {
+    "verdict": "ALWAYS BREAKS",
+    "edits": 5987,
+    "files": 158,
+    "shape_changed": 0,
+    "swiftc_rejected": 158,
+    "ts_blind": 158,
+    "example": "HumanEval_0_has_close_elements: extraneous whitespace after '.' is not permitted"
+  },
+  "('(', ')')": {
+    "verdict": "never fires",
+    "edits": 0,
+    "files": 0,
+    "shape_changed": 0,
+    "swiftc_rejected": 0,
+    "ts_blind": 0,
+    "example": ""
+  },
+  "(')', '.')": {
+    "verdict": "never fires",
+    "edits": 0,
+    "files": 0,
+    "shape_changed": 0,
+    "swiftc_rejected": 0,
+    "ts_blind": 0,
+    "example": ""
+  },
+  "(',', 'NAME')": {
+    "verdict": "never fires",
+    "edits": 0,
+    "files": 0,
+    "shape_changed": 0,
+    "swiftc_rejected": 0,
+    "ts_blind": 0,
+    "example": ""
+  },
+  "(')', ',')": {
+    "verdict": "preserving",
+    "edits": 37,
+    "files": 3,
+    "shape_changed": 0,
+    "swiftc_rejected": 0,
+    "ts_blind": 0,
+    "example": ""
+  }
 }
