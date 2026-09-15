@@ -253,10 +253,10 @@
     "files": 82,
     "dTok_pct": 0.0,
     "files_changed_pct": 0.0,
-    "frag_pct": 3.8767812238055326,
-    "split_pct": 3.8767812238055326,
-    "frag_changed": 185,
-    "split_changed": 185,
+    "frag_pct": 0.0,
+    "split_pct": 0.0,
+    "frag_changed": 0,
+    "split_changed": 0,
     "frag_total": 4772
   },
   "Qwen/CodeQwen1.5-7B-Chat|('[', '1')": {

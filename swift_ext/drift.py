@@ -81,12 +81,25 @@ def measure(tokenizer, corpus, rule):
         pieces_b = tokenizer.convert_ids_to_tokens(ids_b)
 
         d_tok.append((len(ids_b) - len(ids_a)) / len(ids_a) * 100)
-        if ids_a != ids_b:
+        ids_equal = ids_a == ids_b
+        if not ids_equal:
             changed_files += 1
+
+        # If the id sequences are byte-identical, no identifier could
+        # possibly have re-fragmented -- skip the per-identifier comparison
+        # entirely rather than trust it. offset_mapping is computed against
+        # each input string's own length, so it can differ between two
+        # strings whose *token content* never diverged (confirmed: on at
+        # least one tokenizer, a single space adjacent to '[' does not
+        # survive into the token stream at all). Comparing offset-sliced
+        # fragments in that case measures an artifact of the two strings'
+        # lengths, not anything the model saw.
+        frag_total += sum(1 for _ in grammar_spans(src))
+        if ids_equal:
+            continue
 
         shift = shift_map(src, rule)
         for lo, hi, _text in grammar_spans(src):
-            frag_total += 1
             fa = fragments_for((lo, hi), off_a, pieces_a)
             fb = fragments_for((shift(lo), shift(hi)), off_b, pieces_b)
             if fa != fb:
