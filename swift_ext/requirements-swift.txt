@@ -1,0 +1,7 @@
+tree-sitter
+tree-sitter-swift
+antlr4-python3-runtime
+evaluate
+datasets
+transformers
+pandas
